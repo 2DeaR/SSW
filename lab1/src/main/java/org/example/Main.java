@@ -115,7 +115,7 @@ public class Main {
         }
     }
 
-    private static void writeToFile(String dataType, Set<?> data, String outputPath, String prefix, boolean addToExistingFile) {
+    public static void writeToFile(String dataType, Set<?> data, String outputPath, String prefix, boolean addToExistingFile) {
         String fileName = (prefix.isEmpty() ? "" : prefix + "_") + dataType + ".txt";
         if (!outputPath.isEmpty()) {
             fileName = outputPath + File.separator + fileName;
@@ -131,7 +131,7 @@ public class Main {
         }
     }
 
-    private static void printNumberStats(Set<? extends Number> numbers) {
+    public static void printNumberStats(Set<? extends Number> numbers) {
         if (numbers.isEmpty()) return;
 
         double min = Double.POSITIVE_INFINITY, max = Double.NEGATIVE_INFINITY, sum = 0;
@@ -141,12 +141,11 @@ public class Main {
             if (val > max) max = val;
             sum += val;
         }
-
         double avg = sum / numbers.size();
         System.out.println("Мин: " + min + ", Макс: " + max + ", Сумма: " + sum + ", Среднее: " + avg);
     }
 
-    private static void printStringStats(Set<String> strings) {
+    public static void printStringStats(Set<String> strings) {
         if (strings.isEmpty()) return;
 
         String shortest = null, longest = null;
@@ -154,7 +153,6 @@ public class Main {
             if (shortest == null || str.length() < shortest.length()) shortest = str;
             if (longest == null || str.length() > longest.length()) longest = str;
         }
-
         System.out.println("Самая короткая строка: " + shortest + ", Самая длинная строка: " + longest);
     }
 }
