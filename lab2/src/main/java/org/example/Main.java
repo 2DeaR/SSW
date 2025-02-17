@@ -9,7 +9,7 @@ public class Main {
     public static final int LENGTH_CALCULATOR = 10;
     public static final int DELAY = 500;
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws InterruptedException {
         System.out.print("\033[2J\033[H");
         ExecutorService executor = Executors.newFixedThreadPool(THREAD_COUNT);
         CountDownLatch latch = new CountDownLatch(THREAD_COUNT);
@@ -18,12 +18,7 @@ public class Main {
             executor.execute(new ThreadRunnable(i, LENGTH_CALCULATOR, DELAY, latch));
         }
         executor.shutdown();
-
-        try {
-            latch.await();
-            System.out.print("\033[" + (THREAD_COUNT + 1) + ";0H");
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
+        latch.await();
+        System.out.print("\033[" + (THREAD_COUNT + 1) + ";0H");
     }
 }
