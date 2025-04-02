@@ -1,0 +1,169 @@
+databaseChangeLog:
+  - changeSet:
+      id: 1
+      author: you
+      changes:
+        - createTable:
+            tableName: customer
+            columns:
+              - column:
+                  name: id
+                  type: bigserial
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+              - column:
+                  name: name
+                  type: varchar(255)
+              - column:
+                  name: address_street
+                  type: varchar(255)
+              - column:
+                  name: address_city
+                  type: varchar(255)
+              - column:
+                  name: address_postal_code
+                  type: varchar(20)
+              - column:
+                  name: address_country
+                  type: varchar(100)
+  - changeSet:
+      id: 2
+      author: you
+      changes:
+        - createTable:
+            tableName: item
+            columns:
+              - column:
+                  name: id
+                  type: bigserial
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+              - column:
+                  name: description
+                  type: varchar(1000)
+              - column:
+                  name: shipping_weight_value
+                  type: numeric(19,2)
+              - column:
+                  name: measurement_name
+                  type: varchar(100)
+              - column:
+                  name: measurement_symbol
+                  type: varchar(10)
+              - column:
+                  name: name
+                  type: varchar(255)
+              - column:
+                  name: price
+                  type: numeric(19,2)
+  - changeSet:
+      id: 3
+      author: you
+      changes:
+        - createTable:
+            tableName: orders
+            columns:
+              - column:
+                  name: id
+                  type: bigserial
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+              - column:
+                  name: date
+                  type: timestamp
+              - column:
+                  name: status
+                  type: varchar(50)
+              - column:
+                  name: customer_id
+                  type: bigint
+                  constraints:
+                    foreignKey:
+                      name: fk_orders_customer
+                      referencedTableName: customer
+                      referencedColumnNames: id
+  - changeSet:
+      id: 4
+      author: you
+      changes:
+        - createTable:
+            tableName: order_detail
+            columns:
+              - column:
+                  name: id
+                  type: bigserial
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+              - column:
+                  name: quantity_value
+                  type: integer
+              - column:
+                  name: tax_status
+                  type: varchar(50)
+              - column:
+                  name: order_id
+                  type: bigint
+                  constraints:
+                    foreignKey:
+                      name: fk_order_detail_order
+                      referencedTableName: orders
+                      referencedColumnNames: id
+              - column:
+                  name: item_id
+                  type: bigint
+                  constraints:
+                    foreignKey:
+                      name: fk_order_detail_item
+                      referencedTableName: item
+                      referencedColumnNames: id
+  - changeSet:
+      id: 5
+      author: you
+      changes:
+        - createTable:
+            tableName: payment
+            columns:
+              - column:
+                  name: id
+                  type: bigserial
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+              - column:
+                  name: amount
+                  type: float
+              - column:
+                  name: order_id
+                  type: bigint
+                  constraints:
+                    foreignKey:
+                      name: fk_payment_order
+                      referencedTableName: orders
+                      referencedColumnNames: id
+              - column:
+                  name: payment_type
+                  type: varchar(50)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: cash_tendered
+                  type: float
+              - column:
+                  name: name
+                  type: varchar(255)
+              - column:
+                  name: bank_id
+                  type: varchar(50)
+              - column:
+                  name: number
+                  type: varchar(50)
+              - column:
+                  name: type
+                  type: varchar(50)
+              - column:
+                  name: exp_date
+                  type: timestamp
